@@ -10,7 +10,7 @@ const Footer = () => {
                         className="mb-4 flex items-center space-x-3 rtl:space-x-reverse sm:mb-0">
 
                         <span className="self-center whitespace-nowrap text-2xl">
-                        Cnippet <span className="text-base">Blog</span>
+                        Cnippet <span className="text-base">Blog.</span>
                         </span>
                     </a>
                     <ul className="mb-6 flex flex-wrap items-center text-sm font-medium text-gray-700 sm:mb-0 ">
