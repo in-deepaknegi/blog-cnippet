@@ -8,7 +8,7 @@ const posts = [
     {
         id: 1,
         title: "Building Scalable Next.js Apps",
-        href: "/blog/build-a-blog-with-nextjs-and-mdx",
+        href: "/build-a-blog-with-nextjs-and-mdx",
         img: Hero1,
         description: "Discover the best practices and strategies for building scalable Next.js applications that can handle a high volume of traffic and grow with your business.",
         date: "Jan 15, 2024",
@@ -18,7 +18,7 @@ const posts = [
     {
         id: 2,
         title: "Exploring React Hooks in Depth",
-        href: "/blog/demo",
+        href: "/demo",
         img: Hero2,
         description: "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
         date: "Mar 16, 2020",
