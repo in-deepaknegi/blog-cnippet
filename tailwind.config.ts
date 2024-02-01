@@ -5,16 +5,20 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/[slug]/**/*.{js,ts,jsx,tsx,mdx}",
+    './mdx-components.tsx',
+    "./blog/**/*.{js,ts,jsx,tsx,mdx}",   
+  ],
+  plugins: [require('tailwind-highlightjs')],
+  safelist: [
+    {
+      pattern: /hljs+/,
+    },
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+    hljs: {
+      theme: 'github-dark',
     },
   },
-  plugins: [],
 };
 export default config;
