@@ -61,7 +61,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                                 />
                             </div>
 
-                            <MDXRemote source={src} options={options}/>
+                            <MDXRemote source={src} options={options as any}/>
 
                         </div>
                     </article>
