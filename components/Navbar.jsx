@@ -5,7 +5,7 @@ const links = [
     {
         id: 1,
         title: "Latest blogs",
-        url: "#",
+        url: "/blogs",
     },
     {
         id: 2,

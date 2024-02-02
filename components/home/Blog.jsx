@@ -1,41 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Hero1 from "@/public/nextjs.png";
-import Hero2 from "@/public/react.png";
-import Hero3 from "@/public/typescript.jpg";
 
-const posts = [
-    {
-        id: 1,
-        title: "Building Scalable Next.js Apps",
-        href: "/build-a-blog-with-nextjs-and-mdx",
-        img: Hero1,
-        description: "Discover the best practices and strategies for building scalable Next.js applications that can handle a high volume of traffic and grow with your business.",
-        date: "Jan 15, 2024",
-        datetime: "2020-03-16",
-        category: { title: "Technology", href: "#" },
-    },
-    {
-        id: 2,
-        title: "Exploring React Hooks in Depth",
-        href: "/demo",
-        img: Hero2,
-        description: "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
-        date: "Mar 16, 2020",
-        datetime: "2020-03-16",
-        category: { title: "Marketing", href: "#" },
-    },
-    {
-        id: 3,
-        title: "Improve your customer experience",
-        href: "#",
-        img: Hero3,
-        description: "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-        date: "Mar 16, 2020",
-        datetime: "2020-03-16",
-        category: { title: "Marketing", href: "#" },
-    },
-];
+import posts from '@/data/posts'
 
 const Blogs = () => {
     return (
@@ -43,23 +9,23 @@ const Blogs = () => {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="flex justify-between mx-auto text-center tracking-tight text-black">
                     <h2 className="text-3xl font-semibold sm:text-5xl">Latest Blogs</h2>
-                    <a href="#" className="my-auto text-2xl">
+                    <a href="/blogs" className="my-auto text-2xl">
                         Discover more <span aria-hidden="true">→</span>
                     </a>
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                    {posts.map((post) => (
+                    {posts.slice(0, 3).map((post) => (
                         <article key={post.id} className="flex flex-col items-start">
                             <a
                                 href={post.href}
-                                className="relative w-full h-full hover:scale-105 transform ease-in-out duration-300"
+                                className="w-full h-full overflow-hidden rounded-2xl "
                             >
                                 <Image
                                     src={post.img}
                                     alt="post-img"
-                                    className="aspect-video w-full rounded-2xl object-cover sm:aspect-[2/1] lg:aspect-[3/2] "
+                                    className="aspect-video w-full object-cover sm:aspect-[2/1] lg:aspect-[3/2] hover:scale-110 transform ease-in-out duration-300"
                                 />
-                                <div className="absolute inset-0 rounded-2xl shadow-xl ring-inset ring-gray-100"></div>
+
                             </a>
                             <div className="mt-2 md:mt-8 max-w-xl">
                                 <div className="text-xs">
