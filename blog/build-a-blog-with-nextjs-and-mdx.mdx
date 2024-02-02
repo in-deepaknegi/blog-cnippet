@@ -3,22 +3,59 @@ title: "Nextjs and MDX"
 subtitle: "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML."
 date: "Monday, January 15, 2024"
 image: '/nextjs.png'
+
+author: Deepak Negi
+intro: "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev."
+insta:
 ---
 
-# Welcome to my MDX page!
+## Introduction 
+In this article we will learning about implement MDX to our Next.js project.
 
-This is paragraph
-This is some **bold** and _italics_ text.
-This is a list in markdown:
-- One
-- Two
-- Three
+Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML. It is widely used for creating material for websites and blogs.
+You write.
 
 ```tsx
- npm i highlight.js rehype-highlight tailwind-highlightjs
+I **enjoy** using Next.js and MDX
 ```
 
 ```tsx
+Output: 
+<p>I <strong>enjoy</strong> using Next.js and MDX</p>
+```
+
+MDX is a superset of markdown that allows you to write JSX right in your markdown files. It is a powerful tool for adding dynamic interactivity and embedding React components into your content.
+Next.js can support both local MDX content within your application and external MDX files downloaded dynamically from the server. The Next.js plugin converts markdown and React components into HTML, with support for Server Components (the default in App Router).
+
+## @next/mdx
+The @next/mdx package is used to customize Next.js to handle markdown and MDX. It draws data from local files, allowing you to generate pages with the. mdx extension directly in your /pages or /app directory.
+
+Let's walk through how to configure and use MDX with Next.js.
+
+## Installation and setup
+We will start by installing packages needed to render MDX:
+
+```tsx
+npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
+```
+
+### creating mdx-components.tsx
+Create a mdx-components.tsx file in the root of your application (src/ or the parent folder of app/):
+Important: mdx-components.tsx is necessary to use MDX with App Router and will not function without it.
+mdx-components.tsx
+
+``` tsx
+import type { MDXComponents } from 'mdx/types'
+
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+    return {
+        ...components,
+    }
+}
+```
+### updating next.config.js
+Update the next.config.js file at your project's root to configure it to use MDX:
+``` tsx
 const withMDX = require('@next/mdx')()
  
 /** @type {import('next').NextConfig} */
@@ -31,13 +68,157 @@ const nextConfig = {
 module.exports = withMDX(nextConfig)
 ```
 
+
+## Creating our first .mdx file
+Then, create a new MDX page within the /app directory:
+```tsx
+your-project  
+├── app  
+│   └── my-mdx-page  
+│       └── page.mdx  
+└── package.json
+```
+Now you can use markdown and import React components directly inside your MDX page:
+```tsx
+page.mdx
+# Welcome to my MDX page!
+
+This is paragraph
+This is some **bold** and _italics_ text.
+This is a list in markdown:
+- One
+- Two
+- Three
+```
+## Remote MDX
+## Local MDX
+Using a local file from your project folder
+```tsx
+your-project  
+├── app 
+│   └── blog  
+│       └── page.tsx
+└── blogs  
+    └── blog-01.mdx  
+```
+blog-01.mdx
+```tsx
+# Welcome to my MDX blog-01!
+
+This is paragraph
+This is some **bold** and _italics_ text.
+This is a list in markdown:
+- One
+- Two
+- Three
+```
+page.tsx
 ```tsx
 import { MDXRemote } from 'next-mdx-remote/rsc'
- 
+import fs from 'fs';
+import path from 'path';
+
 export default async function RemoteMdxPage() {
-  // MDX text - can be from a local file, database, CMS, fetch, anywhere...
-  const res = await fetch('https://...')
-  const markdown = await res.text()
-  return <MDXRemote source={markdown} />
+    // MDX text - can be from a local file, database, CMS, fetch, anywhere...
+    const filePath = path.join(process.cwd(), 'blogs', 'blog-01.mdx');
+
+    // Read the contents of the MDX file
+    const src = fs.readFileSync(filePath, 'utf8');
+
+    return <MDXRemote source={src} />   
 }
+```
+
+## Dynamic routes
+When you don't know the exact segment names ahead of time and want to create routes from dynamic data, you can use Dynamic Segments that are filled in at request time or prerendered at build time.
+
+A Dynamic Segment can be created by wrapping a folder's name in square brackets: (folderName). For example, (id) or (slug).
+Dynamic Segments are passed as the params prop to layout, page, route, and generateMetadata functions.
+
+For example, a blog could include the following route app/blog/(slug)/page.js where (slug) is the Dynamic Segment for blog posts.
+```tsx
+app/blog/[slug]/page.tsx
+export default function Page({ params }: { params: { slug: string } }) 
+{  
+    return <div>My Post: {params.slug}</div>
+}
+```
+
+```tsx
+import React from 'react'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import fs from 'fs';
+import path from 'path';
+
+const Blog = ({ params }: { params: { slug: string } }) => {
+    const id = params.slug
+
+    const filePath = path.join(process.cwd(), 'blogs', `${id}.mdx`);
+
+    const src = fs.readFileSync(filePath, 'utf8');
+
+    return (
+        <>
+            <main className='mx-auto max-w-3xl px-6 lg:px-8 py-10'>
+                <article className='blog my-10'>
+                    <MDXRemote source={src} />
+                </article>
+            </main>
+        </>
+    )
+}
+
+export default Blog
+```
+
+## Integrating Gray-matter
+```tsx
+npm install gray matter
+```
+
+```tsx
+---
+title: "Nextjs and MDX"
+subtitle: "Markdown is a lightweight markup language for formatting text."
+date: "Monday, January 15, 2024"
+image: '/nextjs.png'
+---
+```
+
+```tsx
+import matter from 'gray-matter';
+import Image from 'next/image';
+
+const Blog = ({ params }: { params: { slug: string } }) => {
+    const id = params.slug
+
+    const filePath = path.join(process.cwd(), 'blogs', `${id}.mdx`);
+
+    const srco = fs.readFileSync(filePath, 'utf8');
+    const { data, content } = matter(srco);
+    const value = data;
+    const src = content;
+
+    return (
+        <>
+            <main className='mx-auto max-w-3xl px-6 lg:px-8 py-10'>
+                <div>
+                    <h1 className='text-center my-4'>{value.title}</h1>
+                    <Image
+                        src={value.image}
+                        width={1080}
+                        height={680}
+                        alt='featured image'
+                        className='rounded-2xl'
+                    />
+                </div>
+                <article className='blog my-10'>
+                    <MDXRemote source={src} />
+                </article>
+            </main>
+        </>
+    )
+}
+
+export default Blog
 ```

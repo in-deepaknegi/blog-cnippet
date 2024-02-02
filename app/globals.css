@@ -35,7 +35,7 @@
   .blog :where(h2):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
     font-size: 1rem;
     line-height: 1.75rem;
-    font-weight: 800;
+    font-weight: 700;
     color: rgb(15 23 42);
   }
   @media (min-width: 768px) {
@@ -47,7 +47,7 @@
   .blog :where(h3):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
     font-size: 0.825rem;
     line-height: 1.25rem;
-    font-weight: 800;
+    font-weight: 700;
     color: rgb(15 23 42);
   }
   @media (min-width: 768px) {
@@ -57,7 +57,7 @@
     }
   }
   .blog :where(p):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
-    font-size: 1.0125rem;
+    font-size: 1.0225rem;
     line-height: 1.5rem;
     color: rgb(15 23 42);
   }
