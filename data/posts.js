@@ -5,20 +5,20 @@ import Hero3 from "@/public/typescript.jpg";
 const posts = [
     {
         id: 1,
-        title: "Building Scalable Next.js Apps",
+        title: "Building a blog with Next.js and MDX",
         href: "/build-a-blog-with-nextjs-and-mdx",
         img: Hero1,
-        description: "Discover the best practices and strategies for building scalable Next.js applications that can handle a high volume of traffic and grow with your business.",
-        date: "Jan 15, 2024",
+        description: "Markdown is a simple markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally valid HTML.",
+        date: "Feb 2, 2024",
         category: {
-            title: "Technology",
+            title: "Next.js",
             href: "#"
         },
     },
     {
         id: 2,
         title: "Exploring React Hooks in Depth",
-        href: "/demo",
+        href: "#",
         img: Hero2,
         description: "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
         date: "Mar 16, 2020",
