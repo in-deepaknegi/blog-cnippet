@@ -1,25 +1,21 @@
 import { MetadataRoute } from 'next'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    return [
-        {
-            url: 'https://blog.cnippet.com',
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 1,
-        },
-        {
-            url: 'https://blog.cnippet.com/blogs',
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
+const urls = [
+    'https://blog.cnippet.com',
+    'https://blog.cnippet.com/blogs',
+    'https://blog.cnippet.com/build-a-blog-with-nextjs-and-mdx',
+    'https://blog.cnippet.com/google-authentication-in-nextjs-using-nextauth',
+]
 
-        {
-            url: 'https://blog.cnippet.com/build-a-blog-with-nextjs-and-mdx',
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
-    ]
+export default function sitemap(): MetadataRoute.Sitemap {
+    console.log(urls.length)
+
+    const allUrls: MetadataRoute.Sitemap =  urls.map((url) => ({
+        url,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: url === 'https://blog.cnippet.com' ? 1 : 0.8,
+    }));
+
+    return allUrls;
 }

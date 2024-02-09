@@ -1,0 +1,196 @@
+---
+title: "Google Authentication in Next.js 14 using NextAuth"
+subtitle: "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML."
+date: "Friday, February 08, 2024"
+image: '/nextjs.png'
+
+author: Deepak Negi
+intro: "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev."
+github: "https://github.com/in-deepaknegi"
+insta: "https://www.instagram.com/deepaknegi_00/"
+---
+
+## Creating a Next.js project
+To embark on your Next.js journey, the first step is setting up your project. Begin by installing Next.js using your preferred package manager. You can use npm or yarn, depending on your workflow. Once installed, create a new Next.js project by running a simple command in your terminal:
+
+```tsx
+npx create-next-app@latest
+```
+
+This instruction establishes the fundamental structure of a Next.js project for you to begin working with. It contains all the essential setups and requirements to initiate your development process. If you are unfamiliar with Next.js and require assistance in setting up your project, [click here](https://www.example.com) for further details.
+
+## Creating environment variables file (.env)
+Environment variables play a crucial role in setting up your Next.js application for various environments. They provide a secure means to store sensitive information and handle configuration settings without embedding them directly into your codebase.
+
+To establish an environment variables file in Next.js, you can follow these steps:
+* Begin by creating a new file called **.env** in the **main directory** of your project ().
+* Then, define your environment variables within this file using the format KEY = VALUE.
+
+```tsx
+GOOGLE_ID =
+GOOGLE_SECRET =
+```
+**NOTE** Remember not to commit this file to version control systems like Git. Make sure to add the .env file in the **.gitignore** file, as it holds confidential information
+
+Now, in order to set up the **GOOGLE_ID** and **GOOGLE_SECRET** we will configure google API credentials
+
+## Creating goolge credentials
+In order to incorporate Google services into your Next.js application, you will have to establish Google credentials. 
+
+This usually requires you to make a project in the Google Developer Console, produce API keys, and set up OAuth consent screens. Use the official documentation from Google to generate and acquire your credentials. After obtaining them, make sure to store them securely in your environment variables file.
+
+## Integrating next-auth
+Next.js offers seamless authentication solutions through packages like next-auth, which simplifies the implementation of authentication features in your application.
+
+To integrate next-auth, follow these steps:
+
+### 1. Install next-auth
+Install **next-auth** in your Next.js project by running:
+```tsx
+npm i next-auth
+```
+This command installs next-auth and its dependencies, enabling you to leverage its powerful authentication capabilities within your application.
+
+## 2. Configure SessionProvider
+In order to use next-auth, we must first make the session context, **SessionProvider**, available at the top level of your application. 
+
+Since **SessionProvider** requires a client component and cannot be placed inside the root layout, we will create a new file called authProvider.js in the app directory to address this issue.
+```tsx
+// authProvider.js
+"use client"
+import { SessionProvider } from 'next-auth/react'
+
+export const NextAuthProvider = ({ children }) => {
+    return <SessionProvider>{children}</SessionProvider>
+}
+```
+
+Now, we will import the SessionProvider into the layout.js file.
+
+```tsx
+// layout.js
+import { NextAuthProvider } from './authProvider'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <NextAuthProvider>
+          {children}
+        </NextAuthProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+### 3. Add API route
+API routes in Next.js enable server-side logic and data handling. Adding an API route is essential for authenticating users and managing authentication-related tasks. Here's how to add an API route for authentication purposes:
+
+* **Create an API route:** In your Next.js project, create a new file **route.js** in the **app/api/auth/[...nextauth]** directory.
+
+* **Define Route Handlers:** Within the route.js file, define hadlers for authentication related requests:
+
+```tsx
+// app/api/auth/[...nextauth]/route.js
+import NextAuth from "next-auth/next"
+import GoogleProvider from 'next-auth/providers/google'
+
+const authOptions = {
+    providers: [
+        GoogleProvider ({
+            clientId: process.env.GOOGLE_ID,
+            clientSecret: process.env.GOOGLE_SECRET,
+        })
+    ]
+}
+
+const handler = NextAuth(authOptions);
+export {handler as GET, handler as POST}
+```
+Here, authOptions specifies the authentication providers available for use, such as Google, along with their respective client IDs and secrets needed for authentication.
+
+The handler variable encapsulates the authentication logic and functionalities provided by NextAuth, allowing for streamlined and secure user authentication processes. 
+
+Finally, the GET and POST exports enable the handling of both GET and POST requests to this API route, ensuring comprehensive and flexible interaction with the authentication system.
+
+**NOTE:** All request to /api/auth/*(signIn, callback, signOut, etc) will be automatically be handle by NextAuth.js
+
+## Using next-auth from Frontend
+With next-auth set up on the backend, you can seamlessly integrate it into your frontend components to enable user authentication and access control. Here's how to use next-auth from the frontend:
+
+The useSession() React Hook in the NextAuth.js client is the easiest way to check if someone is signed in.
+
+```tsx
+"use client"
+import { signIn, signOut, useSession } from 'next-auth/react'
+export default function Component() {
+    const { data: session } = useSession();
+
+    if (session) {
+        return (
+            <>
+                Signed in as {session.user.email} <br />
+                <button onClick={() => signOut()}>Sign out</button>
+            </>
+        )
+    }
+    return (
+        <>
+            Not signed in <br />
+            <button onClick={() => signIn("google")}>Sign in</button>
+        </>
+    )
+}
+```
+
+The useSession() React Hook in the NextAuth.js client also provides us with the **status option**:
+
+```tsx
+"use client"
+import { signIn, signOut, useSession } from 'next-auth/react'
+
+const Googleauth = () => {
+    const { status, data: session } = useSession();
+    
+    return (
+        {status === 'authenticated' ? (
+            <div className='flex gap-2'>
+                <button
+                  onClick={() => signOut()}
+                  className='px-6 py-1 border border-gray-300 rounded-full'>
+                    Sign Out
+                </button>
+            </div>
+        ) : (
+            <div className='flex gap-2'>
+                <button
+                  onClick={() => signIn("google")}
+                  className='px-6 py-1 border border-gray-300 rounded-full'>
+                    Sign In
+                </button>
+            </div>
+        )}
+    )
+}
+
+export default Googleauth
+```
+## Common errors
+You might get the following error in your console:
+* [next-auth][warn][NEXTAUTH_URL] 
+* [next-auth][warn][NO_SECRET]
+
+To resovel these error make changes to the .env file
+
+```tsx
+GOOGLE_ID = 5874-tnlm...hq8.apps.googleusercontent.com
+GOOGLE_SECRET = GOCSPX-...AvZk
+
+NEXTAUTH_URL =  http://localhost:3000
+NEXTAUTH_SECRET= 'sIuyjGv8DRazazEcb4n9rcbGaSCMClFk'
+```

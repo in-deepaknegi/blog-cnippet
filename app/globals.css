@@ -33,7 +33,7 @@
   }
 
   .blog :where(p):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
-    @apply text-[1.05rem] text-slate-900;
+    @apply text-[1.035rem] text-slate-900;
   }
   .blog :where(a):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
     @apply text-[1.03rem] font-bold leading-6 text-slate-900 inline-block pr-[17px];
