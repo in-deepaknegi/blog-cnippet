@@ -1,0 +1,151 @@
+---
+title: "Google Sign-in using Next-auth and MongoDB"
+subtitle: "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML."
+date: "Friday, February 08, 2024"
+image: '/nextjs.png'
+
+author: Deepak Negi
+intro: "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev."
+github: "https://github.com/in-deepaknegi"
+insta: "https://www.instagram.com/deepaknegi_00/"
+---
+
+## Creating a Next.js project
+```tsx
+npx create-next-app@latest
+```
+## Creating environment variables file (.env)
+```tsx
+GOOGLE_ID =
+GOOGLE_SECRET =
+```
+
+Now, in order to configure the GOOGLE_ID and GOOGLE_SECRET we will to setup or google API credentials
+
+## Creating goolge credentials
+
+## Integrating next-auth
+### Install next-auth
+```tsx
+npm i next-auth
+```
+
+## Configure SessionProvider
+To be able to use next-auth first we'll need to expose the session context, **SessionProvider** at the top level of you application.
+
+As **SessionProvider**, requires a client component and therefore cannot be put insider the root layout. To resolve this issue, we will a new file, Providers.js in the app directory
+```tsx
+// Providers.js
+"use client"
+import { SessionProvider } from 'next-auth/react'
+
+export const NextAuthProvider = ({ children }) => {
+    return <SessionProvider>{children}</SessionProvider>
+}
+```
+
+Now, finally we will import the **SessionProvider** in the layout.js file
+
+```tsx
+// layout.js
+import { NextAuthProvider } from './Providers'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <NextAuthProvider>
+          {children}
+        </NextAuthProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+### Add API route
+To add NextAuth.js to a project create a file called route.js in the 
+app | api | auth | [...nextauth] directory. This contains the dynamic route handler for NextAuth.js which will also contain all of you global NextAuth.js configurations.
+
+```tsx
+import NextAuth from "next-auth/next"
+import GoogleProvider from 'next-auth/providers/google'
+
+const authOptions = {
+    providers: [
+        GoogleProvider ({
+            clientId: process.env.GOOGLE_ID,
+            clientSecret: process.env.GOOGLE_SECRET,
+        })
+    ]
+}
+
+const handler = NextAuth(authOptions);
+export {handler as GET, handler as POST}
+```
+
+All request to /api/auth/*(signIn, callback, signOut, etc) will be automatically be handle by NextAuth.js
+
+## Using next-auth from front-end
+Now it's time to make NextAuth.js accessible in the frontend.
+The useSession() React Hook in the NextAuth.js client is the easiest way to check if someone is signed in.
+```tsx
+"use client"
+import { signIn, signOut, useSession } from 'next-auth/react'
+export default function Component() {
+    const { data: session } = useSession()
+    if (session) {
+        return (
+            <>
+                Signed in as {session.user.email} <br />
+                <button onClick={() => signOut()}>Sign out</button>
+            </>
+        )
+    }
+    return (
+        <>
+            Not signed in <br />
+            <button onClick={() => signIn("google")}>Sign in</button>
+        </>
+    )
+}
+```
+
+The useSession() React Hook in the NextAuth.js client also provides us with the status option:
+```tsx
+"use client"
+import { signIn, signOut, useSession } from 'next-auth/react'
+
+const Googleauth = () => {
+    const { status, data: session } = useSession();
+    
+    return (
+        {status === 'authenticated' ? (
+            <div className='flex gap-2'>
+                <button
+                  onClick={() => signOut()}
+                  className='px-6 py-1 border border-gray-300 rounded-full'>
+                    Sign Out
+                </button>
+            </div>
+        ) : (
+            <div className='flex gap-2'>
+                <button
+                  onClick={() => signIn()}
+                  className='px-6 py-1 border border-gray-300 rounded-full'>
+                    Sign In
+                </button>
+            </div>
+        )}
+    )
+}
+
+export default Googleauth
+```
+
+### N0_SECRET ERROR
+### NO_NEXTAUTH ERROR

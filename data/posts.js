@@ -17,9 +17,9 @@ const posts = [
     },
     {
         id: 2,
-        title: "Exploring React Hooks in Depth",
-        href: "#",
-        img: Hero2,
+        title: "Google Sign-in using Next-auth and MongoDB",
+        href: "/google-sign-in-using-next-auth-and-mongodb",
+        img: Hero1,
         description: "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
         date: "Mar 16, 2020",
         category: {

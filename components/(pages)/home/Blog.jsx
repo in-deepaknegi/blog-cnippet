@@ -13,7 +13,7 @@ const Blogs = () => {
                         Discover more <span aria-hidden="true">→</span>
                     </a>
                 </div>
-                <div className="mx-auto mt-8 sm:mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-6xl lg:grid-cols-3">
+                <div className="mx-auto mt-8 sm:mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-7xl lg:grid-cols-3">
                     {posts.slice(0, 3).map((post) => (
                         <article
                             key={post.id}

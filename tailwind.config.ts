@@ -6,7 +6,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/[slug]/**/*.{js,ts,jsx,tsx,mdx}",
-    './mdx-components.tsx',
+    "./mdx-components.tsx",
     "./blog/**/*.{js,ts,jsx,tsx,mdx}",   
   ],
   plugins: [require('tailwind-highlightjs')],

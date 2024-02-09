@@ -86,7 +86,7 @@ const Navbar = () => {
                             Help
                         </a>
                         <span className="h-5 w-[1px] bg-gray-500"></span>
-                        <a href="">
+                        <a href="#">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
