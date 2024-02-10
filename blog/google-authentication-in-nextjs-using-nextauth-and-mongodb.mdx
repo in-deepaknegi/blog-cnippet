@@ -1,5 +1,5 @@
 ---
-title: "Google Authentication in Next.js 14 using NextAuth"
+title: "Google Authentication in Next.js 14 using NextAuth and MongoDB"
 subtitle: "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML."
 date: "Friday, February 08, 2024"
 image: '/nextjs.png'
@@ -51,7 +51,7 @@ npm i next-auth
 ```
 This command installs next-auth and its dependencies, enabling you to leverage its powerful authentication capabilities within your application.
 
-## 2. Configure SessionProvider
+### 2. Configure SessionProvider
 In order to use next-auth, we must first make the session context, **SessionProvider**, available at the top level of your application. 
 
 Since **SessionProvider** requires a client component and cannot be placed inside the root layout, we will create a new file called authProvider.js in the app directory to address this issue.
@@ -120,7 +120,7 @@ Finally, the GET and POST exports enable the handling of both GET and POST reque
 
 **NOTE:** All request to /api/auth/*(signIn, callback, signOut, etc) will be automatically be handle by NextAuth.js
 
-## Using next-auth from Frontend
+### 4. Using next-auth from Frontend
 With next-auth set up on the backend, you can seamlessly integrate it into your frontend components to enable user authentication and access control. Here's how to use next-auth from the frontend:
 
 The useSession() React Hook in the NextAuth.js client is the easiest way to check if someone is signed in.
@@ -193,4 +193,120 @@ GOOGLE_SECRET = GOCSPX-...AvZk
 
 NEXTAUTH_URL =  http://localhost:3000
 NEXTAUTH_SECRET= 'sIuyjGv8DRazazEcb4n9rcbGaSCMClFk'
+```
+
+## Adding MongoDB database integration
+To connect MongoDB to your Next.js project, you'll initially have to install Mongoose, which is a tool used for modeling MongoDB objects and is specifically designed to function in an asynchronous environment such as Node.js. To start, go to your project directory in the terminal and run the following npm command:
+
+### 1. Install mongoose
+```tsx
+npm i mongoose
+```
+This command will fetch and install the Mongoose package along with its dependencies, making it accessible within your project.
+
+### 2. Creating MongoDB account and setting up database
+Prior to linking your Next.js project to MongoDB, you should establish a MongoDB Atlas account if you don't have one yet. MongoDB Atlas offers a convenient cloud-hosted MongoDB service that enables you to easily deploy, manage, and expand MongoDB databases. After signing up and logging in, proceed with the directions to establish a new cluster and generate a database for your project.
+
+### 3. Connection string
+Once you have configured your database on MongoDB Atlas, you will require the connection string. This string includes the essential details for your application to connect to the MongoDB database. Go to your cluster dashboard on MongoDB Atlas, find the "Connect" button, and select "Connect your application." Copy the connection string provided, as it will be necessary for the next step.
+```tsx
+mongodb+srv://username:<password>@cluster0.ykw38w2.mongodb.net/
+```
+### 4. Adding to .env file
+For security reasons, it's best practice to store sensitive information such as connection strings in environment variables. Create a .env file in the root directory of your Next.js project if you don't have one already. Inside this file, add an environment variable to store your MongoDB connection string:
+```tsx
+MONGODB_URI = mongodb+srv://username:<password>@cluster0.ykw38w2.mongodb.net/Database
+```
+
+### 5. Connecting to MongoDB
+Now that Mongoose is installed and your MongoDB connection string is securely stored, it's time to set up a connection in your Next.js project. The connection is usually established when your application starts. In your Next.js project, find the file where you start your server or application, and include the following code:
+
+```tsx
+// library/mongo.js
+import mongoose from "mongoose";
+
+const connectDb = async () => {
+    try {
+        if (mongoose.connection.readyState === 0) {
+            await mongoose.connect(process.env.MONGODB_URI);
+            console.log("MongoDb connected")
+        }
+    } catch {
+        console.log(error);
+    }
+}
+
+export default connectDb;
+```
+### 6. Creating schema
+
+```tsx
+import mongoose, { Schema, models } from "mongoose";
+
+const userSchema = new Schema(
+    {
+        email: {
+            type: String,
+            required: true,
+        },
+        name: {
+            type: String,
+            required: true,
+        },
+    },
+    { timestamps: true }
+)
+
+const User = models.User || mongoose.model("User", userSchema);
+export default User;
+```
+### 7. Updating route.js 
+Once you've defined your schemas, you can update your route handlers to interact with your MongoDB database.
+
+```tsx
+import { NextResponse } from "next/server";
+import NextAuth from "next-auth/next"
+import GoogleProvider from 'next-auth/providers/google'
+
+import connectDb from '@/library/mongo';
+import User from '@/models/googleUser';
+
+const authOptions = {
+    providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_ID,
+            clientSecret: process.env.GOOGLE_SECRET,
+        })
+    ],
+    callbacks: {
+        async signIn({ user, account }) {
+
+            if (account.provider === "google") {
+                const { name, email } = user;
+                console.log(user);
+                try {
+                    await connectDb();
+
+                    const userExists = await User.findOne({ email });
+
+                    if (!userExists) {
+                        await User.create({ name, email });
+
+                        return NextResponse.json({
+                            message: "User Registered"
+                        },
+                            { status: 201 }
+                        );
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            return user;
+        }
+    }
+}
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST }
 ```

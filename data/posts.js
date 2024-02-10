@@ -17,11 +17,11 @@ const posts = [
     },
     {
         id: 2,
-        title: "Google Authentication in Next.js 14 using NextAuth",
-        href: "/google-authentication-in-nextjs-using-nextauth",
+        title: "Google Authentication in Next.js 14 using NextAuth and MongoDB",
+        href: "/google-authentication-in-nextjs-using-nextauth-and-mongodb",
         img: Hero1,
         description: "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
-        date: "Mar 16, 2020",
+        date: "Feb 08, 2024",
         category: {
             title: "Marketing",
             href: "#"

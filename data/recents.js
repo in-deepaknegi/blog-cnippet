@@ -1,7 +1,7 @@
 const recents = [
     {
         id: 1,
-        title:  "Enterprise design tips",
+        title:  "Integrating MongoDB in Next.js 14",
         desc:  "Over the past year, Volosoft has undergone many changes! After months of preparation.",
         href: "#"
     },

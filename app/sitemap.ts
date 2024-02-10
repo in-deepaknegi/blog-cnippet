@@ -4,7 +4,7 @@ const urls = [
     'https://blog.cnippet.com',
     'https://blog.cnippet.com/blogs',
     'https://blog.cnippet.com/build-a-blog-with-nextjs-and-mdx',
-    'https://blog.cnippet.com/google-authentication-in-nextjs-using-nextauth',
+    'https://blog.cnippet.com/google-authentication-in-nextjs-using-nextauth-and-mongodb',
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
