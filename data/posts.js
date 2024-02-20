@@ -27,20 +27,8 @@ const posts = [
             href: "#"
         },
     },
-    {
+    {   
         id: 3,
-        title: "Improve your customer experience",
-        href: "#",
-        img: Hero3,
-        description: "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-        date: "Mar 16, 2020",
-        category: {
-            title: "Marketing",
-            href: "#"
-        },
-    },
-    {
-        id: 4,
         title: "Implementing Dark Mode in Next.js 14",
         href: "/implementing-dark-mode-in-next-js-14",
         img: Hero1,
@@ -51,6 +39,19 @@ const posts = [
             href: "#"
         },
     },
+    {
+        id: 4,
+        title: "Improve your customer experience",
+        href: "#",
+        img: Hero3,
+        description: "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
+        date: "Mar 16, 2020",
+        category: {
+            title: "Marketing",
+            href: "#"
+        },
+    },
+
 ];
 
 export default posts
