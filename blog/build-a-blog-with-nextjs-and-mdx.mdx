@@ -189,6 +189,10 @@ export default function Page({ params }: { params: { slug: string } })
 }
 ```
 
+```tsx
+npm install next-mdx-remote
+```
+
 After obtaining the value of params.slug from the request, we can save it to a different variable called "id" and then proceed to display the corresponding mdx file on the web page.
 
 ```tsx
@@ -220,7 +224,7 @@ export default Blog
 
 ## Integrating Gray-matter
 ```tsx
-npm install gray matter
+npm install --save gray-matter
 ```
 
 ```tsx

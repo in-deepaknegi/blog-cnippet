@@ -1,0 +1,149 @@
+---
+title: "Implementing Dark Mode in Next.js 14"
+subtitle: "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML."
+date: "Saturday, February 17, 2024"
+image: '/nextjs.png'
+
+author: Deepak Negi
+intro: "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev."
+github: "https://github.com/in-deepaknegi"
+insta: "https://www.instagram.com/deepaknegi_00/"
+---
+
+Enhancing user experience and catering to individual preferences is paramount in modern web development. Implementing a dark mode toggle in your Next.js application offers a seamless way to adjust brightness levels, providing comfort and accessibility to users across varied lighting conditions. This article delves into the steps involved in achieving this functionality, ensuring a smooth and personalized experience for your visitors.
+
+## Prerequisites:
+* A basic understanding of Next.js and React
+* Node.js and npm (or yarn) installed on your system
+
+
+## Step 1: Installation and Configuration
+
+### Install the next-themes library:
+
+```tsx
+npm install next-themes
+```
+
+### Update your tailwind.config.ts file:
+Enable class-based dark mode by setting the darkMode property to 'class'. This activates Tailwind's built-in dark mode support and simplifies styling adjustments.
+
+```tsx
+const config: Config = {
+  // ... other configurations
+  darkMode: 'class',
+};
+```
+
+## Step 2: Wrapping Your App in ThemeProvider
+
+### Create a themeProvider.js file:
+
+Create a file under context/themeProvider.js and import the ThemeProvider component from **next-themes**. Wrap your application content within this component, passing the necessary attributes.
+
+Make the context file as "use client", otherwise you will get an error.
+
+```tsx
+// context/themeProvider.js
+"use client"
+import { ThemeProvider } from 'next-themes';
+
+export function DarkProvider({ children }) {
+  return (
+    <ThemeProvider attribute="class" defaultTheme='system' enableSystem>
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+### Update your Layout.ts file:
+
+Import the DarkProvider component and wrap your page layout (RootLayout) with it. This ensures that theme management functionality is accessible throughout your application.
+
+```tsx
+import { DarkProvider } from '@/context/themeProvider';
+
+// ... other Layout component code
+
+return (
+  <html>
+    <body>
+      <DarkProvider>
+        {children}
+      </DarkProvider>
+    </body>
+  </html>
+);
+```
+## Step 3: Building the Toggle Component
+
+### Create a library/theme.js file:
+
+In this file, create a ThemeSwitch component that utilizes the useTheme hook from next-themes. This hook provides access to the current theme and functions to change it, enabling user interaction.
+
+```tsx
+// library/theme.js
+import { useTheme } from 'next-themes';
+
+const ThemeSwitch = () => {
+  const { theme, setTheme } = useTheme();
+
+  const handleLightMode = () => {
+    setTheme('light');
+  };
+
+  const handleDarkMode = () => {
+    setTheme('dark');
+  };
+
+  return { theme, handleLightMode, handleDarkMode };
+};
+
+export default ThemeSwitch;
+```
+
+## Step 4: Implementing the Toggle
+
+### Create a Footer.js file:
+
+Import the ThemeSwitch component and use its exported functions to handle user clicks on the light and dark mode buttons. Define styles and SVG icons for the buttons to create a visually appealing toggle.
+
+Make the file as "use client", otherwise you will get an error.
+
+```tsx
+"use client"
+import React from 'react';
+import ThemeSwitch from '@/modules/library/theme';
+
+const Footer = () => {
+  const { theme, handleLightMode, handleDarkMode } = ThemeSwitch();
+
+  return (
+    <div className="footer-container">
+      <div className="toggle-container">
+        <button onClick={handleLightMode}>Light Mode</button>
+        <button onClick={handleDarkMode}>Dark Mode</button>
+      </div>
+    </div>
+  );
+};
+
+export default Footer;
+```
+
+## Conclusion
+
+By following these steps, you've successfully implemented a user-friendly dark mode toggle in your Next.js application. Experiment with different styling options and themes to personalize the experience further. Remember to test your implementation thoroughly across various devices and screen sizes to ensure optimal functionality.
+
+## Additional notes:
+* This guide provides a basic implementation. You can customize it further based on your specific needs and preferences.
+* Consider accessibility when designing your toggle and theme styles.
+* Explore advanced next-themes features like system theme detection and persistence.
+
+
+## to-do
+* update the footer component
+* tell about the use-client
+* tell about how to implement dark-mode using the 'dark:' class
+* suppressHydrationWarning in layout.js to overcome hydration error
