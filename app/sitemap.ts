@@ -5,7 +5,8 @@ const urls = [
     'https://blog.cnippet.com/blogs',
     'https://blog.cnippet.com/build-a-blog-with-nextjs-and-mdx',
     'https://blog.cnippet.com/google-authentication-in-nextjs-using-nextauth-and-mongodb',
-    'https://blog.cnippet.com/implementing-dark-mode-in-next-js-14'
+    'https://blog.cnippet.com/implementing-dark-mode-in-next-js-14',
+    'https://blog.cnippet.com/newsletter-api-tutorial-using-next-js-14-and-mongodb',
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

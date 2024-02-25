@@ -25,7 +25,7 @@
   }
 
   .blog :where(h2):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
-    @apply text-xl md:text-2xl font-bold text-slate-950;
+    @apply mt-4 text-xl md:text-2xl font-bold text-slate-950;
   }
 
   .blog :where(h3):not(:where([class~="not-blog"], [class~="not-blog"] *)) {

@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Hero from '@/components/(pages)/home/Hero'
 import Blog from '@/components/(pages)/home/Blog'
+import Newsletter from '@/components/Newsletter'
 
 export default function Home() {
 
@@ -19,6 +20,7 @@ export default function Home() {
       <main className="font-sans">
         <Hero />
         <Blog />
+        <Newsletter />
       </main>
       <Footer />
     </>

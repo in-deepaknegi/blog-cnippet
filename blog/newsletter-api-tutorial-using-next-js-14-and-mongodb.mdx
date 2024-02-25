@@ -1,0 +1,422 @@
+---
+title: "Next.js Newsletter API Tutorial: Using MongoDB for Email Subscriptions"
+subtitle: "This article guides you through creating a robust newsletter API using Next.js and MongoDB, providing clear explanations and avoiding repetition. Let's dive in!"
+date: "Saturday, February 17, 2024"
+image: "/nextjs.png"
+
+author: Deepak Negi
+intro: "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev."
+github: "https://github.com/in-deepaknegi"
+insta: "https://www.instagram.com/deepaknegi_00/"
+---
+
+## Creating a Next.js project
+
+To embark on your Next.js journey, the first step is setting up your project. Begin by installing Next.js using your preferred package manager. You can use npm or yarn, depending on your workflow. Once installed, create a new Next.js project by running a simple command in your terminal:
+
+```tsx
+npx create-next-app@latest
+```
+
+This instruction establishes the fundamental structure of a Next.js project for you to begin working with. It contains all the essential setups and requirements to initiate your development process. If you are unfamiliar with Next.js and require assistance in setting up your project, [click here](https://www.example.com) for further details.
+
+## Adding MongoDB database integration
+
+To connect MongoDB to your Next.js project, you'll initially have to install Mongoose, which is a tool used for modeling MongoDB objects and is specifically designed to function in an asynchronous environment such as Node.js. To start, go to your project directory in the terminal and run the following npm command:
+
+### 1. Install mongoose
+
+```tsx
+npm i mongoose
+```
+
+This command will fetch and install the Mongoose package along with its dependencies, making it accessible within your project.
+
+### 2. Creating MongoDB account and setting up database
+
+Prior to linking your Next.js project to MongoDB, you should establish a MongoDB Atlas account if you don't have one yet. MongoDB Atlas offers a convenient cloud-hosted MongoDB service that enables you to easily deploy, manage, and expand MongoDB databases. After signing up and logging in, proceed with the directions to establish a new cluster and generate a database for your project.
+
+### 3. Connection string
+
+Once you have configured your database on MongoDB Atlas, you will require the connection string. This string includes the essential details for your application to connect to the MongoDB database. Go to your cluster dashboard on MongoDB Atlas, find the "Connect" button, and select "Connect your application." Copy the connection string provided, as it will be necessary for the next step.
+
+```tsx
+mongodb+srv://username:<password>@cluster0.ykw38w2.mongodb.net/
+```
+
+### 4. Adding to .env file
+
+For security reasons, it's best practice to store sensitive information such as connection strings in environment variables. Create a .env file in the root directory of your Next.js project if you don't have one already. Inside this file, add an environment variable to store your MongoDB connection string:
+
+```tsx
+MONGODB_URI = mongodb+srv://username:<password>@cluster0.ykw38w2.mongodb.net/Database
+```
+
+### 5. Connecting to MongoDB
+
+Now that Mongoose is installed and your MongoDB connection string is securely stored, it's time to set up a connection in your Next.js project. The connection is usually established when your application starts. In your Next.js project, find the file where you start your server or application, and include the following code:
+
+```tsx
+// library/mongo.js
+import mongoose from "mongoose";
+
+const connectDb = async () => {
+  try {
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(process.env.MONGODB_URI);
+      console.log("MongoDb connected");
+    }
+  } catch {
+    console.log(error);
+  }
+};
+
+export default connectDb;
+```
+
+### 6. Creating schema
+
+```tsx
+import mongoose, { Schema } from "mongoose";
+
+const newsletterSchema = new Schema({
+  email: {
+    type: String,
+    required: [true, "Email is required"],
+    match: [/^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/i, "Invalid email address"],
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const Newsletter =
+  mongoose.models.Newsletter || mongoose.model("Newsletter", newsletterSchema);
+
+export default Newsletter;
+```
+
+## Creating API Logic for Email Subscription
+
+```tsx
+// app/api/newsletter/route.js
+import { NextResponse } from "next/server";
+import mongoose from "mongoose";
+
+import connectDb from "@/modules/library/mongo";
+import NewsletterModel from "@/modules/models/newsletter.js";
+
+export async function POST(req) {
+  const { email } = await req.json();
+
+  try {
+    await connectDb();
+
+    //check if the email is already present in the database
+    const existingEmail = await NewsletterModel.findOne({ email });
+
+    if (existingEmail) {
+      return NextResponse.json({
+        msg: [
+          "🌟 Welcome back, valued customer. We're thrilled to have you with us again!",
+        ],
+        success: false,
+      });
+    }
+
+    //create a new record if the email does not exist
+    await NewsletterModel.create({ email });
+
+    return NextResponse.json({
+      msg: ["🚀Email subscribed successfully. Welcome aboard!"],
+      success: true,
+    });
+  } catch (error) {
+    if (error instanceof mongoose.Error.ValidationError) {
+      let errorList = [];
+
+      for (let e in error.errors) {
+        errorList.push(error.errors[e].message);
+      }
+      console.log(errorList);
+      return NextResponse.json({ msg: errorList });
+    } else {
+      return NextResponse.json({ msg: "Unable to subscribe" });
+    }
+  }
+}
+```
+
+## Integrating the Newsletter Component
+
+### 1. Newsletter component
+First of all we will create a newsletter component. Visit
+<a href="https://ui.cnippet.com/components/newsletter" target="_blank">this</a> for code of newsletter-component
+
+```tsx
+"use client"
+import React, { useState } from 'react';
+
+const Newsletter = () => {
+
+    const [email, setEmail] = useState([]);
+
+    return (
+        <section
+            id="newsletter"
+            className="overflow-x-hidden py-10 sm:py-16 lg:py-24"
+        >
+            <div className="mx-auto grid max-w-7xl grid-cols-1 items-center px-6 lg:grid-cols-12 lg:gap-1 lg:px-8">
+                <div className="col-span-12 mx-auto lg:col-span-7 lg:mx-0">
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                        Stay Updated with Our Newsletter
+                    </h2>
+                    <p className="mt-4 text-base text-gray-600">
+                        Receive the most recent information about new services and exclusive
+                        deals.
+                    </p>
+                </div>
+                <form
+                    onSubmit={}
+                    className="form col-span-12 mx-auto mt-6 w-full max-w-md lg:col-span-5 lg:mx-0 lg:mt-0"
+                >
+                    <div className="flex gap-x-3">
+                        <label htmlFor="email-address" className="sr-only">
+                            Email address
+                        </label>
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            id="email-address"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            required
+                            placeholder="Enter your email"
+                        />
+                        <button
+                            type="submit"
+                            className="flex rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+                        >
+                            Subscribe
+                        </button>
+                    </div>
+
+                    <p className="fose mt-4 text-sm text-gray-700">
+                        We care about your data. Read our
+                        <span className="text-indigo-600">
+                            <a href="#"> privacy policy</a>
+                        </span>
+                        .
+                    </p>
+                </form>
+            </div>
+        </section>
+    );
+};
+
+export default Newsletter;
+
+```
+
+### 2. handleSubmit() function
+Now lets add a handleSubmit function for handling the call to api api/newsletter/route.js. Alaso, let's add a section for displaying all the errors and success messages
+```tsx
+"use client"
+import React, { useState } from 'react';
+
+const Newsletter = () => {
+
+    const [email, setEmail] = useState([]);
+    const [message, setMessage] = useState([]);
+    const [success, setSuccess] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const res = await fetch('/api/newsletter', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                email
+            })
+        })
+
+        const { msg, success } = await res.json();
+        setSuccess(success);
+        setMessage(msg);
+
+        setTimeout(() => {
+            setEmail("");
+            setMessage("");
+        }, 4000);
+    }
+
+    return (
+        <section
+            id="newsletter"
+            className="overflow-x-hidden py-10 sm:py-16 lg:py-24"
+        >
+            <div className="mx-auto grid max-w-7xl grid-cols-1 items-center px-6 lg:grid-cols-12 lg:gap-1 lg:px-8">
+                ... same as previous
+                <form
+                    onSubmit={handleSubmit}
+                    className="form col-span-12 mx-auto mt-6 w-full max-w-md lg:col-span-5 lg:mx-0 lg:mt-0"
+                >
+                    <div className="flex gap-x-3">
+                        <label htmlFor="email-address" className="sr-only">
+                            Email address
+                        </label>
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            id="email-address"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            required
+                            placeholder="Enter your email"
+                        />
+                        <button
+                            type="submit"
+                            className="flex rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+                        >
+                            Subscribe
+                        </button>
+                    </div>
+                    <div className='my-auto mt-2'>
+                        {message && message.map((e) => (
+                            <div key={message} className={`${success ? 'text-green-600' : 'text-indigo-700'} text-sm font-semibold`}>
+                                <span className='my-auto'>{e}</span>
+                            </div>
+                        ))
+                        }
+                    </div>
+                    <p className="fose mt-4 text-sm text-gray-700">
+                        We care about your data. Read our
+                        <span className="text-indigo-600">
+                            <a href="#"> privacy policy</a>
+                        </span>
+                        .
+                    </p>
+                </form>
+            </div>
+        </section>
+    );
+};
+
+export default Newsletter;
+```
+
+### 3. API call
+at last while the api make a call, lets add a loading animation for the users. Here's the complete code
+
+```tsx
+"use client"
+import React, { useState } from 'react';
+
+const Newsletter = () => {
+
+    const [email, setEmail] = useState([]);
+    const [message, setMessage] = useState([]);
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        setLoading(true)
+        const res = await fetch('/api/newsletter', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                email
+            })
+        })
+
+        const { msg, success } = await res.json();
+        setSuccess(success);
+        setMessage(msg);
+        setLoading(false);
+
+        setTimeout(() => {
+            setEmail("");
+            setMessage("");
+        }, 4000);
+    }
+
+    return (
+        <section
+            id="newsletter"
+            className="overflow-x-hidden py-10 sm:py-16 lg:py-24"
+        >
+            <div className="mx-auto grid max-w-7xl grid-cols-1 items-center px-6 lg:grid-cols-12 lg:gap-1 lg:px-8">
+                <div className="col-span-12 mx-auto lg:col-span-7 lg:mx-0">
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                        Stay Updated with Our Newsletter
+                    </h2>
+                    <p className="mt-4 text-base text-gray-600">
+                        Receive the most recent information about new services and exclusive
+                        deals.
+                    </p>
+                </div>
+                <form
+                    onSubmit={handleSubmit}
+                    className="form col-span-12 mx-auto mt-6 w-full max-w-md lg:col-span-5 lg:mx-0 lg:mt-0"
+                >
+                    <div className="flex gap-x-3">
+                        <label htmlFor="email-address" className="sr-only">
+                            Email address
+                        </label>
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            id="email-address"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            required
+                            placeholder="Enter your email"
+                        />
+                        <button
+                            type="submit"
+                            className="flex rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+                        >
+                            {loading && (
+                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            )}
+
+                            Subscribe
+                        </button>
+                    </div>
+                    <div className='my-auto mt-2'>
+                        {message && message.map((e) => (
+                            <div key={message} className={`${success ? 'text-green-600' : 'text-indigo-700'} text-sm font-semibold`}>
+                                <span className='my-auto'>{e}</span>
+                            </div>
+                        ))
+                        }
+                    </div>
+                    <p className="fose mt-4 text-sm text-gray-700">
+                        We care about your data. Read our
+                        <span className="text-indigo-600">
+                            <a href="#"> privacy policy</a>
+                        </span>
+                        .
+                    </p>
+                </form>
+            </div>
+        </section>
+    );
+};
+
+export default Newsletter;
+```

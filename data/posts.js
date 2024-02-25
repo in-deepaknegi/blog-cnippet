@@ -41,9 +41,9 @@ const posts = [
     },
     {
         id: 4,
-        title: "Improve your customer experience",
-        href: "#",
-        img: Hero3,
+        title: "Next.js Newsletter API Tutorial: Using MongoDB for Email Subscriptions",
+        href: "/newsletter-api-tutorial-using-next-js-14-and-mongodb",
+        img: Hero1,
         description: "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
         date: "Mar 16, 2020",
         category: {
@@ -51,7 +51,6 @@ const posts = [
             href: "#"
         },
     },
-
 ];
 
 export default posts
