@@ -51,7 +51,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
 
                         <div className="blog mt-8 flex flex-col gap-y-5 text-gray-800 font-sans">
                             <p className='text-lg'>
-                                {value.subtitle}
+                                {value.description}
                             </p>
                             <div className='max-w-3xl mx-auto'>
                                 <Image

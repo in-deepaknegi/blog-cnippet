@@ -1,4 +1,3 @@
-"use client"
 import React from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -7,6 +6,7 @@ import Blog from '@/components/(pages)/home/Blog'
 import Newsletter from '@/components/Newsletter'
 
 export default function Home() {
+  
 
   return (
     <>
