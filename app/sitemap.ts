@@ -1,27 +1,3 @@
-// import { MetadataRoute } from 'next'
-
-// const urls = [
-//     'https://blog.cnippet.com',
-//     'https://blog.cnippet.com/blogs',
-//     'https://blog.cnippet.com/build-a-blog-with-nextjs-and-mdx',
-//     'https://blog.cnippet.com/google-authentication-in-nextjs-using-nextauth-and-mongodb',
-//     'https://blog.cnippet.com/implementing-dark-mode-in-next-js-14',
-//     'https://blog.cnippet.com/newsletter-api-tutorial-using-next-js-14-and-mongodb',
-// ]
-
-// export default function sitemap(): MetadataRoute.Sitemap {
-//     console.log(urls.length)
-
-//     const allUrls: MetadataRoute.Sitemap =  urls.map((url) => ({
-//         url,
-//         lastModified: new Date(),
-//         changeFrequency: 'weekly',
-//         priority: url === 'https://blog.cnippet.com' ? 1 : 0.8,
-//     }));
-
-//     return allUrls;
-// }
-
 import fs from "fs";
 import { MetadataRoute } from "next";
 import path from "path";
@@ -35,8 +11,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const blogs = JSON.parse(content);
 
 
-    const entries: MetadataRoute.Sitemap = blogs.map(({ data }: any) => ({
-        url: `${BASE_URL}/${data.slug}`,
+    const entries: MetadataRoute.Sitemap = blogs.map(({ slug }: any) => ({
+        url: `${BASE_URL}/${slug}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.8,
@@ -48,6 +24,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 1,
+        },
+        {
+            url: `${BASE_URL}/blogs`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
         },
         ...entries,
     ]

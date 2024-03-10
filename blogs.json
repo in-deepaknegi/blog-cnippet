@@ -1,62 +1,54 @@
 [
   {
-    "data": {
-      "slug": "build-a-blog-with-nextjs-and-mdx",
-      "title": "Building a blog with Next.js and MDX",
-      "description": "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML.",
-      "href": "/build-a-blog-with-nextjs-and-mdx",
-      "image": "/nextjs.png",
-      "date": "Feb 2, 2024",
-      "category": "Next.js",
-      "author": "Deepak Negi",
-      "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
-      "github": "https://github.com/in-deepaknegi",
-      "insta": "https://www.instagram.com/deepaknegi_00/"
-    }
+    "slug": "build-a-blog-with-nextjs-and-mdx",
+    "title": "Building a blog with Next.js and MDX",
+    "description": "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML.",
+    "href": "/build-a-blog-with-nextjs-and-mdx",
+    "image": "/nextjs.png",
+    "date": "Feb 2, 2024",
+    "category": "Next.js",
+    "author": "Deepak Negi",
+    "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
+    "github": "https://github.com/in-deepaknegi",
+    "insta": "https://www.instagram.com/deepaknegi_00/"
   },
   {
-    "data": {
-      "slug": "google-authentication-in-nextjs-using-nextauth-and-mongodb",
-      "title": "Google Authentication in Next.js 14 using NextAuth and MongoDB",
-      "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
-      "href": "/google-authentication-in-nextjs-using-nextauth-and-mongodb",
-      "image": "/nextjs.png",
-      "date": "Feb 08, 2024",
-      "category": "Next.js",
-      "author": "Deepak Negi",
-      "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
-      "github": "https://github.com/in-deepaknegi",
-      "insta": "https://www.instagram.com/deepaknegi_00/"
-    }
+    "slug": "google-authentication-in-nextjs-using-nextauth-and-mongodb",
+    "title": "Google Authentication in Next.js 14 using NextAuth and MongoDB",
+    "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
+    "href": "/google-authentication-in-nextjs-using-nextauth-and-mongodb",
+    "image": "/nextjs.png",
+    "date": "Feb 08, 2024",
+    "category": "Next.js",
+    "author": "Deepak Negi",
+    "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
+    "github": "https://github.com/in-deepaknegi",
+    "insta": "https://www.instagram.com/deepaknegi_00/"
   },
   {
-    "data": {
-      "slug": "google-authentication-in-nextjs-using-nextauth-and-mongodb",
-      "title": "Implementing Dark Mode in Next.js 14",
-      "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
-      "href": "/google-authentication-in-nextjs-using-nextauth-and-mongodb",
-      "image": "/nextjs.png",
-      "date": "Feb 17, 2024",
-      "category": "Next.js",
-      "author": "Deepak Negi",
-      "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
-      "github": "https://github.com/in-deepaknegi",
-      "insta": "https://www.instagram.com/deepaknegi_00/"
-    }
+    "slug": "google-authentication-in-nextjs-using-nextauth-and-mongodb",
+    "title": "Implementing Dark Mode in Next.js 14",
+    "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
+    "href": "/google-authentication-in-nextjs-using-nextauth-and-mongodb",
+    "image": "/nextjs.png",
+    "date": "Feb 17, 2024",
+    "category": "Next.js",
+    "author": "Deepak Negi",
+    "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
+    "github": "https://github.com/in-deepaknegi",
+    "insta": "https://www.instagram.com/deepaknegi_00/"
   },
   {
-    "data": {
-      "slug": "newsletter-api-tutorial-using-next-js-14-and-mongodb",
-      "title": "Next.js Newsletter API Tutorial: Using MongoDB for Email Subscriptions",
-      "description": "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML.",
-      "href": "/newsletter-api-tutorial-using-next-js-14-and-mongodb",
-      "image": "/nextjs.png",
-      "date": "Mar 06, 2024",
-      "category": "Next.js",
-      "author": "Deepak Negi",
-      "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
-      "github": "https://github.com/in-deepaknegi",
-      "insta": "https://www.instagram.com/deepaknegi_00/"
-    }
+    "slug": "newsletter-api-tutorial-using-next-js-14-and-mongodb",
+    "title": "Next.js Newsletter API Tutorial: Using MongoDB for Email Subscriptions",
+    "description": "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML.",
+    "href": "/newsletter-api-tutorial-using-next-js-14-and-mongodb",
+    "image": "/nextjs.png",
+    "date": "Mar 06, 2024",
+    "category": "Next.js",
+    "author": "Deepak Negi",
+    "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
+    "github": "https://github.com/in-deepaknegi",
+    "insta": "https://www.instagram.com/deepaknegi_00/"
   }
 ]
