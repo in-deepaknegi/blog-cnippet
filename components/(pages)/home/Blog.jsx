@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
 
-import { getBlogs, saveBlogs } from '@/lib/getPosts';
+import { getBlogs, saveBlogs, shuffleBlogs } from '@/lib/getPosts';
 
 const Blogs = () => {
 
-    const blogs = getBlogs();
+    const blogs = shuffleBlogs();
 
     saveBlogs();
 

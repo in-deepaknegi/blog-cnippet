@@ -9,7 +9,7 @@ import rehypeHighlight from 'rehype-highlight';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Profile1 from '@/public/deepak.jpg';
-import { getBlogs } from '@/lib/getPosts';
+import { getBlogs, shuffleBlogs } from '@/lib/getPosts';
 
 const Blog = ({ params }: { params: { slug: string } }) => {
     const id = params.slug
@@ -21,20 +21,8 @@ const Blog = ({ params }: { params: { slug: string } }) => {
     const value = data;
     const src = content;
 
-    const blogs = getBlogs();
-
-    const relatedPosts = blogs.filter((blog: any) => blog.slug !== `${id}`);
-    console.log(relatedPosts);
-
-    const sRelatedPosts = shuffleArray(relatedPosts);
-
-    function shuffleArray(array: any[]) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
+    const blogs = shuffleBlogs();
+    const sRelatedPosts = blogs.filter((blog: any) => blog.slug !== `${id}`);
 
     const options = {
         mdxOptions: {
@@ -119,7 +107,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                             <div className='rounded-2xl border p-6 shadow-xl'>
                                 <h3 className='font-semibold text-lg mb-4 border-b'>Related articles</h3>
 
-                                {sRelatedPosts.slice(0,3).map((article: any,i) => (
+                                {sRelatedPosts.slice(0, 3).map((article: any, i: any) => (
                                     <a key={i} href={article.href}>
                                         <div className="text-black text-base font-semibold">
                                             {article.title}
@@ -141,3 +129,24 @@ const Blog = ({ params }: { params: { slug: string } }) => {
 }
 
 export default Blog
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+    const id = params.slug;
+    const blogs = getBlogs();
+
+    const blog = blogs.find((blog) => blog.slug === id);
+
+    return {
+        title: blog?.title,
+        description: blog?.description,
+        metadataBase: new URL('http://anjaanbackpackers.com/'),
+        openGraph: {
+            images: [
+                {
+                    url: blog?.image
+                }
+            ]
+        }
+    }
+
+}

@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { getBlogs,saveBlogs } from '@/lib/getPosts';
+import { getBlogs, saveBlogs } from '@/lib/getPosts';
 
 const page = () => {
 
