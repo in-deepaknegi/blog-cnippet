@@ -26,10 +26,10 @@
     "insta": "https://www.instagram.com/deepaknegi_00/"
   },
   {
-    "slug": "google-authentication-in-nextjs-using-nextauth-and-mongodb",
+    "slug": "implementing-dark-mode-in-next-js-14",
     "title": "Implementing Dark Mode in Next.js 14",
     "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
-    "href": "/google-authentication-in-nextjs-using-nextauth-and-mongodb",
+    "href": "/implementing-dark-mode-in-next-js-14",
     "image": "/nextjs.png",
     "date": "Feb 17, 2024",
     "category": "Next.js",
@@ -45,6 +45,19 @@
     "href": "/newsletter-api-tutorial-using-next-js-14-and-mongodb",
     "image": "/nextjs.png",
     "date": "Mar 06, 2024",
+    "category": "Next.js",
+    "author": "Deepak Negi",
+    "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
+    "github": "https://github.com/in-deepaknegi",
+    "insta": "https://www.instagram.com/deepaknegi_00/"
+  },
+  {
+    "slug": "using-pnpm-in-next-js-14.mdx",
+    "title": "Using pnpm in next.js 14",
+    "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
+    "href": "/using-pnpm-in-next-js-14",
+    "image": "/nextjs.png",
+    "date": "Mar 18, 2024",
     "category": "Next.js",
     "author": "Deepak Negi",
     "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
