@@ -1,0 +1,123 @@
+---
+slug: "how-to-set-up-multiple-ssh-keys-for-different-git-accounts"
+title: "How to set-up multiple SSH keys for different git accounts"
+description: "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications."
+
+href: "/how-to-set-up-multiple-ssh-keys-for-different-git-accounts"
+image: '/git.png'
+date: "Mar 18, 2024"
+category: "Next.js"
+
+author: Deepak Negi
+intro: "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev."
+github: "https://github.com/in-deepaknegi"
+insta: "https://www.instagram.com/deepaknegi_00/"
+---
+
+## Introduction to SSH
+
+SSH, which stands for Secure Shell, is like a secret passage on the internet. It's a safe way for computers to talk to each other without anyone else understanding what they're saying. In the world of coding, SSH is often used to connect to remote servers or services like GitHub, where developers store and share their code.
+
+## Generating a New SSH Key
+
+To get started with SSH, you need a special key, like a secret code that unlocks the door. You can make this key using a tool called ssh-keygen. Think of it as creating a unique fingerprint for your computer.
+
+Here's how you do it:
+
+* Open git-bash terminal window.
+* Type a following command: 
+```tsx
+ssh-keygen -t ed25519 -f key1_rsa
+```
+Note: If you are using a legacy system that doesn't support the Ed25519 algorithm, use:
+```tsx
+ssh-keygen -t rsa -f key1_rsa
+```
+This command will make a new key with the name key1_rsa.
+
+{/* ##  Adding Your SSH Key to the ssh-agent
+
+Now that you have your shiny new SSH key, you need to store it in a special place called the ssh-agent. It's like a bodyguard that keeps your keys safe.
+
+Here's what you do:
+
+Open your terminal again.
+Type another command: ssh-add ~/.ssh/key1_rsa
+This tells the ssh-agent to remember your key.
+
+**If your key has a passphrase and you don't want to enter the passphrase every time you use the key, you can add your key to the SSH agent. The SSH agent manages your SSH keys and remembers your passphrase.** */}
+
+## Adding a New SSH Key to Your GitHub Account
+
+To use your SSH key with GitHub, you need to let GitHub know about it. It's like telling the guard at the gate that you have the right key to enter.
+
+Here's how:
+
+* Go to GitHub and log in.
+* Click on your picture in the top right corner, then go to "Settings."
+* Look for "SSH and GPG keys" in the sidebar and click on it.
+* Hit the "New SSH key" button.
+* Give your key a name, like "Key 1," and paste your key into the box.
+* Click "Add SSH key," and you're done!
+
+## Creating Multiple SSH Keys for Different GitHub Accounts
+
+Sometimes, you might find yourself needing more than one GitHub account. Maybe you have one for work stuff and another for personal projects. In that situation, it's important to have separate keys to keep everything secure.
+
+### First Account
+
+Let's get started with setting up our first account. Follow these simple steps:
+
+* Generate a new SSH key specifically for this account. You can do this by running the command:
+```tsx 
+ssh-keygen -t ed25519 -f key1_rsa.
+```
+* Now, we'll add this newly created key to our first GitHub account.
+* Once again in the terminal or Git Bash console type the following command to create a new file named 'config'.
+```tsx
+touch config 
+```
+* Inside the 'config' file, we'll specify which key to use for this account. It'll look something like this:
+```tsx
+# First Account
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/key1_rsa
+```
+* In this configuration, the line HostName github.com is crucial. It tells your computer that this key is associated with 'github.com'.
+* To clone a repository from the first account, you'll use a command like this:
+```tsx
+git@github.com:user-name/repository.git
+```
+
+### Second Account
+
+Now, let's set up our second account. Here's how you do it:
+
+* Generate another new SSH key specifically for this second account. Run the command 
+```tsx
+ssh-keygen -t ed25519 -f key2_rsa.
+```
+* Now, add this newly created key to your second GitHub account:
+* Open the 'config' file again. Add another entry for the second GitHub account. It'll look something like this:
+```tsx
+# First Account
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/key1_rsa
+
+# Second Account
+Host github.com
+    HostName github.com-new
+    User git
+    IdentityFile ~/.ssh/key2_rsa
+```
+* In this configuration, we've changed the HostName to github.com-new to indicate that this key belongs to the second account.
+* So, whenever we are cloning from the second account we will modify the ssh url from <br/> **git@github.com:user-name/blog-cnippet.git** <br/>to **git@github.com-new:in-deepaknegi/blog-cnippet.git** <br/> because 'github.com-new' represent our second account with SSH key Key2_rsa.
+```tsx
+git@github.com-new:user-name/repository.git
+```
+
+By following these steps, you can easily manage multiple GitHub accounts on your computer, ensuring that each account stays secure and separate. It's like having different keys for different doors, keeping your work and personal projects organized and safe.

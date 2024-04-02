@@ -26,6 +26,19 @@
     "insta": "https://www.instagram.com/deepaknegi_00/"
   },
   {
+    "slug": "how-to-set-up-multiple-ssh-keys-for-different-git-accounts",
+    "title": "How to set-up multiple SSH keys for different git accounts",
+    "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
+    "href": "/how-to-set-up-multiple-ssh-keys-for-different-git-accounts",
+    "image": "/git.png",
+    "date": "Mar 18, 2024",
+    "category": "Next.js",
+    "author": "Deepak Negi",
+    "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
+    "github": "https://github.com/in-deepaknegi",
+    "insta": "https://www.instagram.com/deepaknegi_00/"
+  },
+  {
     "slug": "implementing-dark-mode-in-next-js-14",
     "title": "Implementing Dark Mode in Next.js 14",
     "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
