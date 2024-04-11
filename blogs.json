@@ -26,6 +26,19 @@
     "insta": "https://www.instagram.com/deepaknegi_00/"
   },
   {
+    "slug": "how-to-integrate-razorpay-payment-gateway-in-next-js-14",
+    "title": "How to integrate Razorpay payment gateway in Next Js 14",
+    "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
+    "href": "/how-to-integrate-razorpay-payment-gateway-in-next-js-14",
+    "image": "/nextjs.png",
+    "date": "Mar 18, 2024",
+    "category": "Next.js",
+    "author": "Deepak Negi",
+    "intro": "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev.",
+    "github": "https://github.com/in-deepaknegi",
+    "insta": "https://www.instagram.com/deepaknegi_00/"
+  },
+  {
     "slug": "how-to-set-up-multiple-ssh-keys-for-different-git-accounts",
     "title": "How to set-up multiple SSH keys for different git accounts",
     "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
@@ -65,9 +78,9 @@
     "insta": "https://www.instagram.com/deepaknegi_00/"
   },
   {
-    "slug": "using-pnpm-in-next-js-14.mdx",
-    "title": "Using pnpm in next.js 14",
-    "description": "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications.",
+    "slug": "using-pnpm-in-next-js-14",
+    "title": "Using pnpm in Next.js 14",
+    "description": "Learn how to turbocharge your Next.js 14 projects with pnpm, a fast and efficient package manager. From installation to integration, optimize your workflow and boost productivity with streamlined dependency management.",
     "href": "/using-pnpm-in-next-js-14",
     "image": "/nextjs.png",
     "date": "Mar 18, 2024",

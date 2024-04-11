@@ -32,9 +32,9 @@ const Navbar = () => {
     };
 
     return (
-        <header className="relative z-10 overflow-hidden">
+        <header className="relative z-10 overflow-hidden bg-white border-b border-gray-200">
             <nav>
-                <div className="bg-white border-b border-gray-100 flex items-center justify-between py-4 px-6 lg:px-8">
+                <div className="mx-auto max-w-[95%] flex items-center justify-between py-6 px-6 lg:px-8">
                     <div className="flex lg:flex-none">
                         <a href="/" className="-m-1.5 p-1.5 text-2xl">
                             Cnippet <span className="text-base">Blog.</span>

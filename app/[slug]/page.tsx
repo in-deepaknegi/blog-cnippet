@@ -52,7 +52,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                             </dl>
                         </div>
 
-                        <div className="blog mt-8 flex flex-col gap-y-5 text-gray-800 font-sans">
+                        <div className="blog mt-8 flex flex-col gap-y-4 text-gray-800 font-sans">
                             <p className='text-lg'>
                                 {value.description}
                             </p>
@@ -137,15 +137,23 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     const blog = blogs.find((blog) => blog.slug === id);
 
     return {
+        metadataBase: new URL('https://blog.cnippet.com/'),
+
         title: blog?.title,
         description: blog?.description,
-        metadataBase: new URL('http://anjaanbackpackers.com/'),
+        applicationName: 'Cnippet Blog',
+        
         openGraph: {
-            images: [
-                {
-                    url: blog?.image
-                }
-            ]
+            title: blog?.title,
+            description: blog?.description,
+            url: `/${id}`,
+            images: [blog?.image]
+        },
+
+        twitter : {
+            title: blog?.title,
+            description: blog?.description,
+            images: [blog?.image]
         }
     }
 

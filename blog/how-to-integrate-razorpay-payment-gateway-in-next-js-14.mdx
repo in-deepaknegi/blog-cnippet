@@ -1,0 +1,124 @@
+---
+slug: "how-to-integrate-razorpay-payment-gateway-in-next-js-14"
+title: "How to integrate Razorpay payment gateway in Next Js 14"
+description: "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications."
+
+href: "/how-to-integrate-razorpay-payment-gateway-in-next-js-14"
+image: '/nextjs.png'
+date: "Mar 18, 2024"
+category: "Next.js"
+
+author: Deepak Negi
+intro: "Hey! I'm Deepak. I'm a full stack developer, bootcamp grad & Dev."
+github: "https://github.com/in-deepaknegi"
+insta: "https://www.instagram.com/deepaknegi_00/"
+---
+
+In the bustling world of online transactions, ensuring a seamless payment experience is paramount for any business. Razorpay, a robust payment gateway, offers a comprehensive solution tailored for developers. In this tutorial, we'll walk through the process of integrating Razorpay into a Next.js 14 project, step by step.
+
+### Step 1. Creating a Razorpay Account and Obtaining API Keys
+To kickstart your journey with Razorpay, the first step is to create an account on their platform. Visit the Razorpay website and proceed with the registration process. 
+Once registered, navigate to the dashboard where you'll find your API keys. These keys serve as the bridge between your application and Razorpay's infrastructure, enabling secure payment processing.
+
+### 2. Next.js 14 Project Initialization and Razorpay Installation
+Before diving into Razorpay integration, ensure you have a Next.js 14 project set up. If you haven't already initialized your Next.js project, you can do so using the following command:
+
+```jsx
+npx create-next-app@14 my-next-app
+```
+
+Once your project is set up, navigate to its directory and install the Razorpay package using npm or yarn:
+```jsx
+cd my-next-app
+```
+
+```jsx
+npm install razorpay
+# or
+yarn add razorpay
+```
+
+### creating our enviroment-variable file
+
+### 3. Building a Simple Payment Component
+Let's create a basic "Pay Now" component using Next.js 14 and Tailwind CSS. This component will serve as the user interface for initiating payments. Start by creating a new file, e.g., PaymentComponent.js, and add the following code:
+
+```tsx
+// PaymentComponent.js
+"use client"
+import React, { useState } from 'react';
+
+const PaymentComponent = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [amount, setAmount] = useState('');
+
+    return (
+        <section className="min-h-[94vh] flex flex-col gap-6 h-14 mx-5 sm:mx-10 2xl:mx-auto 2xl:w-[1400px] items-center pt-36 ">
+            <form
+                className="flex form flex-col gap-6 w-full sm:w-80"
+                onSubmit={processPayment}
+            >
+                {/* Input fields for name, email, and amount */}
+                <div className="space-y-1">
+                    <label htmlFor="name" >Your name</label>
+                    <input
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                        type="name"
+                        id="name"
+                        placeholder="name"
+                        required />
+                </div>
+                {/* More input fields */}
+                
+                <button type="submit" className='bg-blue-500 text-white font-semibold rounded-2xl w-24 mx-auto text-lg py-2'>
+                    Pay
+                </button>
+            </form>
+        </section>
+    );
+};
+
+export default PaymentComponent;
+```
+
+### 4. Creating an API Route for Order Creation
+In your Next.js project, set up an API route to handle order creation on the server side. This route will interact with Razorpay's API to generate orders securely. Create a new file, e.g., order.js, inside the app/api directory and add the following code:
+
+```tsx
+// pages/api/order.js
+
+import Razorpay from 'razorpay';
+import { NextRequest, NextResponse } from 'next/server';
+
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_ID!,
+    key_secret: process.env.RAZORPAY_KEY,
+});
+
+export async function POST(request: NextRequest) {
+    try {
+        const { amount, currency } = (await request.json()) as {
+            amount: string;
+            currency: string;
+        };
+
+        const options = {
+            amount: amount,
+            currency: currency,
+            receipt: 'rcp1',
+        };
+
+        const order = await razorpay.orders.create(options);
+        console.log(order);
+        return NextResponse.json({ orderId: order.id }, { status: 200 });
+    } catch (error) {
+        console.error('Error creating order:', error);
+        return NextResponse.error('Internal Server Error', { status: 500 });
+    }
+}
+```
+
+
+

@@ -1,7 +1,7 @@
 ---
-slug: "using-pnpm-in-next-js-14.mdx"
-title: "Using pnpm in next.js 14"
-description: "Learn how to effectively and efficiently use React Hooks in your projects to improve the performance and scalability of your applications."
+slug: "using-pnpm-in-next-js-14"
+title: "Using pnpm in Next.js 14"
+description: "Learn how to turbocharge your Next.js 14 projects with pnpm, a fast and efficient package manager. From installation to integration, optimize your workflow and boost productivity with streamlined dependency management."
 
 href: "/using-pnpm-in-next-js-14"
 image: '/nextjs.png'
@@ -14,22 +14,71 @@ github: "https://github.com/in-deepaknegi"
 insta: "https://www.instagram.com/deepaknegi_00/"
 ---
 
-## Implementing pnpm in a next.js project
+pnpm, short for **performant npm** , is a relatively new package manager for JavaScript projects. It provides various benefits compared to traditional options such as <a href="https://docs.npmjs.com/" target="_black">npm</a> and <a href="https://yarnpkg.com/getting-started" target="_black">yarn</a>, including quicker installation, efficient use of space through content-addressable storage, and integrated handling of multiple Node.js versions.
 
-* If we have a existing project, first of all we need to delete the old node_modules File, this can be done using the following command:
+This article will guide you through using pnpm to manage dependencies in your Next.js 14 application.
+
+## Installation 
+Before we delve into the specifics, let's ensure pnpm is readily available on your system. Here's a convenient way to achieve this:
+
+### Using npm:
+We can leverage npm itself to install pnpm globally. Simply run the following command:
+
+```tsx
+npm install -g pnpm
+```
+
+### Resolving 'pnpm is not recognized' error:
+
+If you encounter this error after installation, you might need to add the pnpm directory to your system's PATH environment variable. This typically involves locating the pnpm installation directory (e.g., *user/user_name/AppData/Local/pnpm* on Windows) and adding it to your PATH.
+
+Once added, verify the installation by running:
+```tsx
+pnpm -v
+```
+
+## Using pnpm to Create a Next.js 14 Project
+Creating a new Next.js 14 project with pnpm is straightforward:
+
+```tsx
+pnpm create next-app@latest
+```
+
+This command utilizes the **pnpm create** functionality and specifies the **next-app template** with the @latest version tag, ensuring you get the newest Next.js version. The process is very similar to using npm or yarn for project creation.
+
+## Using pnpm in an Existing Next.js Project (Previously Managed with npm)
+If you have an existing Next.js project currently managed by npm, you can migrate to pnpm. Here's how:
+
+1. **Use npx npkill**: to remove all globally installed npm packages, including dependencies from your project.
 
 ```tsx
 npx npkill
 ```
 
-* Install pnpm package
+2. **Install pnpm Dependencies**: Run pnpm i to install all the project dependencies using pnpm. 
+
 ```tsx
 pnpm i 
 ```
 
-* error 'pnpm-lock.yaml is not up to date with package.json'
+3. **Frozen Lockfile (Optional)**: If you want to prevent accidental changes to the pnpm-lock.yaml file (pnpm's equivalent of package-lock.json), you can use the --frozen-lockfile flag with the install command:
+
 ```tsx
 pnpm i --frozen-lockfile
 ```
 
-* proceed with, git add -> git commit
+## Starting development server with pnpm
+
+Once you've installed pnpm, launching your Next.js 14 development server is a breeze:
+
+1. **Use pnpm dev**: This command is the most straightforward way. It's a shortcut for pnpm run dev, which typically executes a script in your package.json file that starts the server.
+
+```tsx
+pnpm dev
+```
+
+2. **pnpm run dev** (if script exists): If your package.json has a custom script named "dev" for starting the server, you can use the more verbose version pnpm run dev.
+
+```tsx
+pnpm run dev
+```

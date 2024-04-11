@@ -21,27 +21,30 @@
     background: #f1f1f1; /* color of the scrollbar corner */
   }
   .blog :where(h1):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
-    @apply text-2xl md:text-4xl font-bold text-slate-950;
+    @apply text-2xl md:text-4xl font-semibold text-slate-950;
   }
 
   .blog :where(h2):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
-    @apply mt-4 text-xl md:text-2xl font-bold text-slate-950;
+    @apply mt-4 text-xl md:text-3xl font-semibold text-slate-950;
   }
 
   .blog :where(h3):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
-    @apply text-lg md:text-xl font-bold text-slate-950;
+    @apply text-lg md:text-xl font-semibold text-slate-950;
   }
 
   .blog :where(p):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
-    @apply text-[1.035rem] text-slate-900;
+    @apply text-[1.095rem] text-slate-900;
   }
   .blog :where(a):not(:where([class~="not-blog"], [class~="not-blog"] *)) {
-    @apply text-[1.03rem] font-bold leading-6 text-slate-900 inline-block pr-[17px];
+    @apply text-[1.03rem] font-bold leading-6 text-blue-600 inline-block pr-[17px];
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="16"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg>')
     right center no-repeat;
   }
   .blog :where(ul > li):not(:where([class~="not-blog"])) {
     @apply text-[1.03rem] leading-6 list-disc ml-4 text-slate-950 mt-2
+  }
+  .blog :where(ol > li):not(:where([class~="not-blog"])) {
+    @apply text-[1.03rem] leading-6 list-decimal ml-4 text-slate-950 mt-2
   }
   .blog :where(pre > code):not(:where([class~="not-blog"])) {
     @apply rounded-xl text-sm;
