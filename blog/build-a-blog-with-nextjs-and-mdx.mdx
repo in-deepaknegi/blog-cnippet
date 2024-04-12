@@ -4,7 +4,7 @@ title: "Building a blog with Next.js and MDX"
 description: "Markdown is a lightweight markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally correct HTML."
 
 href: "/build-a-blog-with-nextjs-and-mdx"
-image: '/nextjs.png'
+image: '/blog/mdx.png'
 date: "Feb 2, 2024"
 category: "Next.js"
 
@@ -17,6 +17,7 @@ insta: "https://www.instagram.com/deepaknegi_00/"
 ## Introduction 
 In this article we will learning about implement MDX to our Next.js project.
 
+### Markdown 101
 <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a>is a simple markup language for formatting text. It enables you to write in plain text syntax and turn it into structurally valid HTML. It is extensively used for producing stuff for websites and blogs. 
 
 ```tsx
@@ -28,22 +29,31 @@ Output:
 <p>I <strong>enjoy</strong> using Next.js and MDX</p>
 ```
 
-<a href="https://mdxjs.com/" target="_blank">MDX </a> is a superset of markdown that allows you to write JSX directly in your markdown files. It's an effective solution for incorporating dynamic interaction and React components into your content.
-Next.js can handle both local MDX content in your application and external MDX files retrieved dynamically from the server. The Next.js plugin transforms markdown and React components to HTML and supports Server Components (which are the default in App Router).
+### Why Next.js and MDX?
 
-The **@next/mdx** package is used to modify Next.js to support markdown and MDX. It takes data from local files, allowing you to create pages with the.mdx extension in your /pages or /app directories.
+(I really enjoy using them too!)
+
+<a href="https://mdxjs.com/" target="_blank">MDX </a> is a superset of markdown that allows you to write JSX directly in your markdown files. This unlocks a powerful approach for incorporating dynamic interactions and React components into your content. Next.js offers flexibility in handling MDX. You can leverage local MDX files within your application or fetch them dynamically from an external server. 
+
+The Next.js plugin streamlines the process of transforming Markdown and React components into HTML, and it even provides support for Server Components (the default in App Router).
+
+## Setting Up MDX in Next.js
+
+The **@next/mdx** package is used to modify Next.js to support markdown and MDX. It takes data from local files, allowing you to create pages with the .mdx extension in your /pages or /app directories.
 
 Let's walk through how to configure and use MDX with Next.js.
 
 ## Installation and setup
-We will start by installing packages needed to render MDX:
+First things first, we need the necessary tools to render MDX. Install these packages using npm, yarn or pnpm (according to your preference):
 
 ```tsx
 npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
 ```
 
 ### Creating mdx-components.tsx
-In the main directory of your application (src/ or the app/), you must create a file called **mdx-components.tsx** as it is necessary for MDX with App Router to work correctly.
+
+For MDX to work seamlessly with App Router in Next.js, start by creating a file called <span className="wrap">mdx-components.tsx</span> in your application's main directory (typically <span className="wrap">/src</span> or <span className="wrap">/app</span>).
+
 
 ``` tsx
 // mdx-components.tsx
@@ -56,25 +66,49 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     }
 }
 ```
-### Updating next.config.js
-Update the **next.config.js** file located at your project's root directory to configure it to use MDX. This will enable you to take advantage of MDX's powerful features and enhance your project with dynamic and interactive content.
+### Updating next.config.js (or next.config.mjs) 
+Head to the <span className="wrap">next.config</span>  file at your project's root directory. We'll update this file to enable Next.js to recognize and process MDX content. This configuration unlocks the potential for dynamic and interactive content using MDX.
+
+The file extension you'll use depends on your project's setup:
+
+* **For JavaScript Configuration (next.config.js)**: If your project primarily uses JavaScript for configuration, the file you'll modify is named next.config.js.
 
 ``` tsx
+// next.config.js
 const withMDX = require('@next/mdx')()
  
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configure `pageExtensions` to include MDX files
-  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
-  // Optionally, add any other Next.js config below
+    pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
  
 module.exports = withMDX(nextConfig)
 ```
 
+* **For Modern JavaScript Configuration (next.config.mjs)**: If your project leverages modern JavaScript features for configuration (like import statements), the file you'll update is named next.config.mjs.
+
+```tsx
+// next.config.mjs
+import nextMDX from '@next/mdx';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+}
+
+const withMDX = nextMDX({
+    options: {
+        remarkPlugins: [],
+        rehypePlugins: [],
+    },
+});
+
+export default withMDX(nextConfig);
+```
+
 
 ## Creating our first .mdx file
-We will begin by creating a new MDX page within the /app directory of our project. This also involves creating a page.mdx file within the specified directory.
+We will begin by creating a new MDX page within the <span className="wrap">/app</span> directory of our project. This also involves creating a page.mdx file within the specified directory.
 
 ```tsx
 your-project  
@@ -98,8 +132,9 @@ This is a list in markdown:
 - Two
 - Three
 ```
+With your MDX file created, you can preview it in your development server. Assuming your development server runs on [localhost:3000](http://localhost:3000/), navigate to [http://localhost:3000/my-mdx-page](http://localhost:3000/my-mdx-page) in your browser.
 
-The above mdx file will be transformed into the following html file through the rendering process.
+Next.js will process the MDX file, transforming it into the corresponding HTML structure. For your example, the rendered HTML would look something like this:
 
 ```html
 <h1>Welcome to my MDX page!</h1>
@@ -118,6 +153,12 @@ The above mdx file will be transformed into the following html file through the 
 ## Local MDX
 When using a local file as an mdx from your project folder, you can easily access and work with the content in a convenient manner.
 
+To work with remote MDX, we'll need the next-mdx-remote package. Install it using npm, yarn or pnpm (according to your preference):
+
+```tsx
+npm install next-mdx-remote
+```
+
 ```tsx
 your-project  
 ├── app 
@@ -126,7 +167,8 @@ your-project
 └── blogs  
     └── blog-01.mdx  
 ```
-We are in the process of creating a new directory specifically intended for blogs, where we will conveniently store our .mdx files. These files will then be rendered in our blog's page.tsx file.
+
+We are currently working on developing a new directory designed specifically for blogs, where we will efficiently organize our .mdx files. These files will then be displayed on our blog's page.tsx file.
 
 ```tsx
 // blog-01.mdx
@@ -140,6 +182,8 @@ This is a list in markdown:
 - Two
 - Three
 ```
+
+Once your MDX file is in position, we will dynamically render it in page.tsx. Go ahead and open the blog/page.tsx file, then insert the following code.
 
 ```tsx
 // blog/page.tsx
@@ -158,48 +202,59 @@ export default async function RemoteMdxPage() {
     return <MDXRemote source={src} />   
 }
 ```
-The code creates a Next.js page component called **RemoteMdxPage**, and it makes use of the **next-mdx-remote** library. 
+Navigate to [http://localhost:3000/blog](http://localhost:3000/blog) in your browser to view the rendered blog post content!
 
-This component asynchronously retrieves the content of an MDX file from the 'blogs' directory. The MDX content is then displayed using the **MDXRemote** component, allowing for the dynamic loading and rendering of MDX content from various sources such as local files or databases. 
+This code creates a Next.js page component called RemoteMdxPage. It uses the <span className="wrap">next-mdx-remote</span> library to fetch the content of the <span className="wrap">blog-01.mdx</span> file asynchronously from the <span className="wrap">blogs</span> directory. The MDXRemote component then displays the retrieved MDX content. 
 
-The **MDXRemote** component manages the conversion and display of the MDX source as React components. This configuration makes it easier to build adaptable and **dynamic pages** with MDX content in a Next.js application.
+This method enables versatile and dynamic content management with MDX in your Next.js application. The MDXRemote component takes care of converting and showing the MDX source as React components, making it easier to create flexible pages with MDX content.
+
 
 ## Dynamic routes
 
+Dynamic routes empower you to create flexible URL structures that adapt based on data, providing a powerful tool to handle various scenarios. This is especially ideal when you don't know the exact segments of your URLs in advance, allowing you to easily accommodate changes and new content without the need for constant manual adjustments.
+
 When you are unsure of the specific segment names in advance and need to generate routes from dynamic data, you can utilize Dynamic Segments. These can be filled in at the time of the request or pre-rendered during the build process.
 
-Suppose we have a list of blogs:
+Imagine you have a collection of blog posts stored in MDX files, like:
 ```tsx
 your-project  
+├── app 
+│   └── blog  
+│       └── [slug]
+│           └── page.tsx
 └── blogs  
     └── blog-01.mdx  
     └── blog-02.mdx 
     └── blog-03.mdx 
 ```
 
-When the link **/blog/blog-01** is clicked, we want to display the contents of the **blog-01.mdx** file. Likewise, when the link **/blog/blog-02** is clicked, we want to display the contents of **blog-02.mdx**, and so forth.
+You want users to be able to access each blog post through a URL like <span className="wrap">/blog/blog-01</span>, where <span className="wrap">blog-01</span> is the unique identifier (slug) of the post. Clicking this URL should display the content of <span className="wrap">blog-01.mdx</span>. Similarly, clicking <span className="wrap">/blog/blog-02 </span> should render <span className="wrap">blog-02.mdx</span> , and so on.
 
 {/* A Dynamic Segment is created by enclosing a folder's name in square brackets, such as **[folderName]**, for instance **[id]** or [**slug**]. Dynamic Segments are passed as the params prop to layout, page, route, and generateMetadata functions.
 
 For instance, in a blog, a route could be structured as **app/blog/[slug]/page.tsx**, where [**slug**] represents the Dynamic Segment for blog posts. */}
 
-The **params** props can be used to access the slug of the current blog that is to be rendered within the application, refer to the example given below
+### Accessing Dynamic Data
+Next.js provides dynamic segments within square brackets [] in your route definition to handle this. These segments can be populated during the request or pre-rendered during the build process.
+
+The <span className="wrap">params</span> props allow you to retrieve the slug of the current blog to be displayed within the application. Please see the example provided below.
 
 ```tsx
 // app/blog/[slug]/page.tsx
+
 export default function Page({ params }: { params: { slug: string } }) 
 {  
     return <div>My Post: {params.slug}</div>
 }
 ```
 
-```tsx
-npm install next-mdx-remote
-```
-
 After obtaining the value of params.slug from the request, we can save it to a different variable called "id" and then proceed to display the corresponding mdx file on the web page.
 
+Here's an example of the page.tsx file within the app/blog/[slug] directory:
+
 ```tsx
+// app/blog/[slug]/page.tsx
+
 import React from 'react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import fs from 'fs';
@@ -226,7 +281,23 @@ const Blog = ({ params }: { params: { slug: string } }) => {
 export default Blog
 ```
 
-## Integrating Gray-matter
+### Explanation:
+
+1. We import necessary libraries for working with React, MDX rendering, and file system access.
+2. The Blog component receives <span className="wrap">params</span> as a prop, containing the slug of the requested blog post.
+3. We extract the <span className="wrap">slug</span> from <span className="wrap">params</span>.
+4. We construct the file path for the MDX file based on the extracted <span className="wrap">slug</span>.
+5. The <span className="wrap">fs.readFileSync</span> function reads the content of the MDX file.
+6. We use the MDXRemote component to render the retrieved MDX content.
+
+With this setup, clicking on URLs like <span className="wrap">/blog/blog-01</span>  or <span className="wrap">/blog/blog-02</span>  will trigger Next.js to fetch the corresponding MDX file based on the slug and dynamically render its content on the page. This approach enables you to manage a dynamic collection of MDX content within your Next.js application.
+
+## Integrating gray-matter
+
+Gray Matter empowers you to add a special section, called frontmatter, at the very beginning of your MDX files. This frontmatter section uses YAML syntax and enables you to define metadata associated with your content. Here's an example of frontmatter within an MDX file:
+
+To begin, install the gray-matter package using npm, yarn or pnpm(according to your preference):
+
 ```tsx
 npm install --save gray-matter
 ```
@@ -238,7 +309,20 @@ subtitle: "Markdown is a lightweight markup language for formatting text."
 date: "Monday, January 15, 2024"
 image: '/nextjs.png'
 ---
+# Welcome to my MDX page!
+
+This is paragraph
+This is some **bold** and *emphasis* text.
+
+This is a list in markdown:
+- One
+- Two
+- Three
 ```
+
+As you can see, the frontmatter section includes details like title, subtitle, date, and image path.
+
+We'll leverage the gray-matter package to extract this valuable metadata from your MDX files. Here's a code snippet demonstrating how to achieve this:  
 
 ```tsx
 import matter from 'gray-matter';
@@ -277,3 +361,13 @@ const Blog = ({ params }: { params: { slug: string } }) => {
 
 export default Blog
 ```
+
+### In this code:
+
+1. We import matter from the gray-matter package.
+2. We construct the file path for the MDX file based on the slug (id).
+3. We read the content of the MDX file using fs.readFileSync.
+4. The matter function from gray-matter parses the content, separating the frontmatter data (data) from the main MDX content (content).
+5. We assign the frontmatter data to a variable named value and the MDX content to a variable named src for easier handling within our component.
+
+With the frontmatter data extracted, you can now utilize it within your application. For instance, you can display the title, subtitle, and date in your blog post layout as displayed in the above code.

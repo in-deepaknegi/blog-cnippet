@@ -22,7 +22,7 @@ const page = () => {
                             Discover more <span aria-hidden="true">→</span>
                         </a>
                     </div>
-                    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-7xl lg:grid-cols-3">
+                    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-3 gap-y-10 lg:max-w-7xl lg:grid-cols-3">
                         {blogs.map((post) => (
                             <article
                                 key={post.title}
@@ -35,7 +35,7 @@ const page = () => {
                                         width={1080}
                                         height={680}
                                         alt="post-img"
-                                        className="aspect-video w-full object-cover sm:aspect-[2/1] lg:aspect-[3/2] hover:scale-110 transform ease-in-out duration-300"
+                                        className="aspect-video w-full object-cover sm:aspect-[2/1] lg:aspect-[3/1.65] hover:scale-110 transform ease-in-out duration-300"
                                     />
                                 </a>
                                 <div className="mt-6 md:mt-8 max-w-xl">
@@ -52,7 +52,7 @@ const page = () => {
                                                 {post.title}
                                             </a>
                                         </h3>
-                                        <p className="mt-2 line-clamp-2 text-[0.925rem] leading-6 text-gray-900">
+                                        <p className="mt-2 line-clamp-1 text-[0.925rem] leading-6 text-gray-900">
                                             {post.description}
                                         </p>
                                     </div>
